@@ -1,0 +1,40 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .cards {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+    background-color: #e3f2fd;
+  }
+  
+  .charts {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .chart-card {
+    padding: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .charts {
+      flex-direction: row;
+    }
+  
+    .chart-card {
+      flex: 1;
+    }
+  }
+  

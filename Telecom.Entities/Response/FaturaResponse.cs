@@ -7,18 +7,20 @@
         {
             
         }
-        public FaturaResponse(int id, int contratoId, decimal valorCobrado, string status)
+        public FaturaResponse(int id, int contratoId, decimal valorCobrado, string status, DateTime dataVecimento)
         {
             Id = id;
             ContratoId = contratoId;
             ValorCobrado = valorCobrado;
             Status = status;
+            DataVencimento =  dataVecimento;
         }
 
         public int Id { get; set; }                
         public int ContratoId { get; set; }
         public decimal ValorCobrado { get; set; }  
         public string? Status { get; set; }
+        public DateTime? DataVencimento {get; set; }
 
     }
 

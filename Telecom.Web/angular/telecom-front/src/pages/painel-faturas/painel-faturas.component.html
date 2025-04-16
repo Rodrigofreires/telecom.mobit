@@ -45,11 +45,26 @@
       <th mat-header-cell *matHeaderCellDef>Operadora</th>
       <td mat-cell *matCellDef="let fatura">{{ getNomeOperadoraPorContrato(fatura.contratoId) }}</td>
     </ng-container>
+
+    <ng-container matColumnDef="planoContratado">
+        <th mat-header-cell *matHeaderCellDef>Planos Contratados</th>
+        <td mat-cell *matCellDef="let fatura">{{ getPlanoContratado(fatura.contratoId) }}</td>
+      </ng-container>
   
     <ng-container matColumnDef="valorCobrado">
       <th mat-header-cell *matHeaderCellDef>Valor Cobrado</th>
-      <td mat-cell *matCellDef="let fatura">{{ fatura.valorCobrado | currency }}</td>
+      <td mat-cell *matCellDef="let fatura">{{ fatura.valorCobrado | currency:'BRL'  }}</td>
     </ng-container>
+
+    <ng-container matColumnDef="dataEmissao">
+        <th mat-header-cell *matHeaderCellDef>Data Emissao</th>
+        <td mat-cell *matCellDef="let fatura">{{ fatura.dataEmissao | date: 'dd/MM/yyyy'  }}</td>
+      </ng-container>
+
+    <ng-container matColumnDef="dataVencimento">
+        <th mat-header-cell *matHeaderCellDef>Data Vencimento</th>
+        <td mat-cell *matCellDef="let fatura">{{ fatura.dataVencimento | date: 'dd/MM/yyyy'  }}</td>
+      </ng-container>
   
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>Status</th>

@@ -20,6 +20,7 @@ import { ContratoRequest } from '../../app/entities/Request/ContratoRequest';
 import { ContratoService } from '../../app/services/contrato.service';
 import { ContratoResponse } from '../../app/entities/Response/ContratoResponse';
 import { OperadoraService } from '../../app/services/operadora.service';
+import { NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   standalone: true,
@@ -41,6 +42,9 @@ import { OperadoraService } from '../../app/services/operadora.service';
     MatDialogModule,
     FormsModule,
   ],
+
+  providers: [...provideNgxMask()],
+
   templateUrl: './painel-faturas.component.html',
   styleUrls: ['./painel-faturas.component.css']
 })
@@ -51,19 +55,24 @@ export class PainelFaturasComponent implements OnInit {
     id: 0,
     contratoId: 0,
     valorCobrado: 0,
-    status: ''
+    status: '',
+    DataVencimento: '', 
+    DataEmissao:'',
   };
 
   contratosResponse: ContratoResponse[] = [];
+  planosContratados: ContratoResponse[] = [];
   operadorasRequest: OperadoraRequest[] = [];
   modalAberto = false;
-  displayedColumns: string[] = ['id', 'contratoId', 'nomeFilial', 'nomeOperadora', 'valorCobrado', 'status', 'acoes'];
+  displayedColumns: string[] = ['id', 'contratoId', 'nomeFilial', 'nomeOperadora', 'planoContratado', 'valorCobrado', 'status', 'dataEmissao', 'dataVencimento', 'acoes'];
   isFormVisible: boolean = false;
   faturaForm!: FormGroup;
   editando: boolean = false;
   idFaturaEditando?: number;
   totalGasto: number | null = null;
   form!: FormGroup;
+
+  
   operadoras: OperadoraRequest[] = [];
 
   constructor(
@@ -78,6 +87,7 @@ export class PainelFaturasComponent implements OnInit {
     this.carregarFaturas();
     this.carregarFiliais();
     this.carregarOperadoras();
+    this.carregarPlanosContratados()
 
     this.faturaForm = this.fb.group({
       contratoId: ['', Validators.required],
@@ -93,10 +103,17 @@ export class PainelFaturasComponent implements OnInit {
 
   carregarFaturas(): void {
     this.faturaService.getFaturas().subscribe({
-      next: (data) => this.faturas = data,
+      next: (data) => {
+        this.faturas = data.map(f => ({
+          ...f,
+          DataVencimento: f.DataVencimento,
+          DataInicio: f.DataEmissao,
+        }));
+      },
       error: (err) => console.error('Erro ao carregar faturas', err)
     });
   }
+  
 
   abrirFormulario(): void {
     this.isFormVisible = true;
@@ -181,9 +198,23 @@ export class PainelFaturasComponent implements OnInit {
     });
   }
 
+  carregarPlanosContratados(): void {
+    this.contratoService.listar().subscribe({
+      next: (planosContratados: ContratoResponse[]) => {
+        this.contratosResponse = planosContratados;
+      },
+      error: (err) => console.error('Erro ao carregar filiais', err)
+    });
+  }
+
   getNomeFilial(contratoId: number): string {
+    const planosContratados = this.contratosResponse?.find(o => o.id === contratoId);
+    return planosContratados ? planosContratados.nomeFilial : 'Filial não encontrada';
+  }
+
+  getPlanoContratado(contratoId: number): string {
     const contrato = this.contratosResponse?.find(o => o.id === contratoId);
-    return contrato ? contrato.nomeFilial : 'Filial não encontrada';
+    return contrato ? contrato.planoContratado : 'Filial não encontrada';
   }
 
   carregarOperadoras(): void {

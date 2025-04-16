@@ -27,8 +27,8 @@ namespace Telecom.Biz
             novoContrato.ValorMensal = contratoResponse.ValorMensal;
             novoContrato.PlanoContratado = contratoResponse.PlanoContratado;
             novoContrato.OperadoraId = contratoResponse.OperadoraId;
-            novoContrato.DataInicio = DateTime.Now;
-            novoContrato.DataVencimento = DateTime.Now.AddMonths(12);
+            novoContrato.DataInicio = contratoResponse.DataInicio;
+            novoContrato.DataVencimento = contratoResponse.DataVencimento;
             novoContrato.Status = true;
 
             _context.Contratos.Add(novoContrato);

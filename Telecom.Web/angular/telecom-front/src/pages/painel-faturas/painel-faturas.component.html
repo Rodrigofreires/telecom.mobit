@@ -1,23 +1,33 @@
-<!-- Campo para selecionar a operadora e a data para calcular o total gasto -->
+
 <form [formGroup]="form" (ngSubmit)="buscarTotalGasto()">
-    <mat-form-field>
-      <mat-label>Operadora</mat-label>
-      <mat-select formControlName="operadoraId">
-        <mat-option *ngFor="let operadora of operadoras" [value]="operadora.id">
-          {{ operadora.nomeOperadora }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  
-    <mat-form-field>
-      <mat-label>Data</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="data">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  
-    <button mat-raised-button color="primary" type="submit">Calcular Total</button>
-  </form>
+  <mat-form-field>
+    <mat-label>Operadora</mat-label>
+    <mat-select formControlName="operadoraId">
+      <mat-option *ngFor="let operadora of operadoras" [value]="operadora.id">
+        {{ operadora.nomeOperadora }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="max-width: 240px; display: block;">
+    <mat-label>Data</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      formControlName="data"
+      required
+      readonly
+      (keydown)="false"
+    >
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <!-- Botão fora do mat-form-field -->
+  <div class="form-actions">
+    <button class="botao-global" mat-raised-button color="primary" type="submit">Calcular Total</button>
+  </div>
+</form>
   
   <!-- Exibindo o total gasto -->
   <div *ngIf="totalGasto !== null">
@@ -86,10 +96,11 @@
   <!-- Botão para abrir o formulário de criação/edição de fatura -->
   <button class="botao-global botao-criar-fatura" mat-raised-button color="primary" (click)="abrirFormulario()">Criar Fatura</button>
   
-  <!-- Formulário de criação/edição de fatura -->
-  <div *ngIf="isFormVisible">
-    <form [formGroup]="faturaForm" (ngSubmit)="onSubmit()">
-      <mat-form-field>
+<!-- Formulário de criação/edição de fatura -->
+<div *ngIf="isFormVisible">
+  <form [formGroup]="faturaForm" (ngSubmit)="onSubmit()">
+    <div class="form-field-container">
+      <mat-form-field class="half-width">
         <mat-label>Contrato</mat-label>
         <mat-select formControlName="contratoId">
           <mat-option *ngFor="let contrato of contratosResponse" [value]="contrato.id">
@@ -97,13 +108,15 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Valor Cobrado</mat-label>
+
+      <mat-form-field class="half-width">
+        <mat-label>Valor Cobrado / Digite 0 se estiver criando fatura ou Digite o valor desejado se estiver editando</mat-label>
         <input matInput formControlName="valorCobrado" type="number">
       </mat-form-field>
-  
-      <mat-form-field>
+    </div>
+
+    <div class="form-field-container">
+      <mat-form-field class="half-width">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status">
           <mat-option value="Pendente">Pendente</mat-option>
@@ -111,9 +124,24 @@
           <mat-option value="Atrasado">Atrasado</mat-option>
         </mat-select>
       </mat-form-field>
-  
-      <button mat-raised-button color="primary" type="submit">Salvar Fatura</button>
-      <button mat-raised-button color="warn" (click)="fecharFormulario()">Cancelar</button>
-    </form>
-  </div>
+
+      <!-- Data de Emissão -->
+      <mat-form-field class="half-width">
+        <mat-label>Data de Emissão</mat-label>
+        <input matInput [matDatepicker]="emissaoPicker" formControlName="dataEmissao" readonly>
+        <mat-datepicker-toggle matSuffix [for]="emissaoPicker"></mat-datepicker-toggle>
+        <mat-datepicker #emissaoPicker></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" class="btn-save" type="submit">Salvar Fatura</button>
+      <button mat-raised-button color="warn" class="btn-cancel" (click)="fecharFormulario()">Cancelar</button>
+    </div>
+  </form>
+</div>
+
+
+
   

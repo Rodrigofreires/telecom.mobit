@@ -23,9 +23,9 @@ namespace Telecom.Biz
 
         public (int pagas, int pendentes, int atrasadas) ObterDistribuicaoPorStatus()
         {
-            int pagas = _context.Faturas.Count(f => f.Status == "Paga");
+            int pagas = _context.Faturas.Count(f => f.Status == "Pago");
             int pendentes = _context.Faturas.Count(f => f.Status == "Pendente");
-            int atrasadas = _context.Faturas.Count(f => f.Status == "Atrasada");
+            int atrasadas = _context.Faturas.Count(f => f.Status == "Atrasado");
 
             return (pagas, pendentes, atrasadas);
         }
@@ -49,7 +49,7 @@ namespace Telecom.Biz
 
                 emitidas[mes]++;
 
-                if (fatura.Status == "Paga")
+                if (fatura.Status == "Pago")
                     pagas[mes]++;
             }
 

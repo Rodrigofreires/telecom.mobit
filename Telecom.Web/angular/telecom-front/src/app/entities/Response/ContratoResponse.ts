@@ -6,4 +6,5 @@ export interface ContratoResponse {
   valorMensal: number;
   status: boolean;
   dataInicio?: string;
+  dataVencimento?: string;
 }

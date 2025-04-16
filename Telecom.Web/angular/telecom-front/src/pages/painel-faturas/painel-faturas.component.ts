@@ -93,7 +93,10 @@ export class PainelFaturasComponent implements OnInit {
       contratoId: ['', Validators.required],
       valorCobrado: ['', [Validators.required, Validators.min(1)]],
       status: ['', Validators.required],
+      dataEmissao: ['', Validators.required],  
+      dataVencimento: ['', Validators.required],  
     });
+    
 
     this.form = this.fb.group({
       operadoraId: [null, Validators.required],
@@ -130,7 +133,6 @@ export class PainelFaturasComponent implements OnInit {
 
         this.faturaService.editarFatura(fatura).subscribe({
           next: () => {
-            console.log('Fatura atualizada!');
             this.fecharFormulario();
             this.carregarFaturas();
           },
@@ -139,7 +141,7 @@ export class PainelFaturasComponent implements OnInit {
       } else {
         this.faturaService.criarFatura(fatura).subscribe({
           next: () => {
-            console.log('Fatura criada com sucesso!');
+
             this.fecharFormulario();
             this.carregarFaturas();
           },
@@ -161,7 +163,9 @@ export class PainelFaturasComponent implements OnInit {
     this.faturaForm.patchValue({
       contratoId: fatura.contratoId,
       valorCobrado: fatura.valorCobrado,
-      status: fatura.status
+      status: fatura.status,
+      dataEmissao: new Date(fatura.DataEmissao), // Convertendo DataEmissao para Date
+      dataVencimento: new Date(fatura.DataVencimento) // Convertendo DataVencimento para Date
     });
   }
 

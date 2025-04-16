@@ -53,7 +53,7 @@ export class PainelOperadorasComponent implements OnInit {
   carregarOperadoras() {
     this.operadoraService.listarOperadoras().subscribe(
       (data: OperadoraServicoResponse[]) => {
-        console.log('Operadoras carregadas:', data); 
+
         this.operadoras = data;
         this.dataSource.data = data; 
       },

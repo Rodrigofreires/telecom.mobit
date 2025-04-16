@@ -16,7 +16,7 @@ namespace Telecom.Biz
         }
 
         // Criar nova fatura
-        public async Task<Fatura> CriarFaturaAsync(FaturaResponse faturaResponse)
+        public async Task<List<Fatura>> CriarFaturasMensaisAsync(FaturaResponse faturaResponse)
         {
             var contrato = await _context.Contratos.FindAsync(faturaResponse.ContratoId);
 
@@ -25,23 +25,38 @@ namespace Telecom.Biz
                 throw new Exception("Contrato não encontrado.");
             }
 
+            var mesesRestantes = (contrato.DataVencimento.Year - contrato.DataInicio.Year) * 12 + contrato.DataVencimento.Month - contrato.DataInicio.Month;
 
-
-            var fatura = new Fatura
+            if (mesesRestantes <= 0)
             {
-                ContratoId = faturaResponse.ContratoId,
-                Contrato = contrato,
-                ValorCobrado = faturaResponse.ValorCobrado,
-                Status = faturaResponse.Status,
-                DataEmissao = DateTime.UtcNow,
-                DataVencimento = DateTime.UtcNow.AddDays(15)
-            };
+                throw new Exception("O contrato não tem meses restantes ou já passou da data de vencimento.");
+            }
 
-            _context.Faturas.Add(fatura);
+            var valorMensal = contrato.ValorMensal / mesesRestantes;
+
+            var faturas = new List<Fatura>();
+            for (int i = 0; i < mesesRestantes; i++)
+            {
+                var fatura = new Fatura
+                {
+                    ContratoId = faturaResponse.ContratoId,
+                    Contrato = contrato,
+                    ValorCobrado = valorMensal,
+                    Status = "Pendente",
+                    DataEmissao = DateTime.UtcNow,
+                    DataVencimento = contrato.DataInicio.AddMonths(i + 1) // Data de vencimento de cada fatura
+                };
+
+                faturas.Add(fatura);
+            }
+
+            // Adiciona as faturas no contexto e salva no banco
+            _context.Faturas.AddRange(faturas);
             await _context.SaveChangesAsync();
 
-            return fatura;
+            return faturas;
         }
+
 
 
         // Atualizar fatura
@@ -106,6 +121,19 @@ namespace Telecom.Biz
         public void DeletarOperadora(int id) =>
             _context.Faturas.Where(o => o.Id == id).ExecuteDelete();
 
+        public decimal CalcularTotalGastosOperadora(int operadoraId, int ano, int mes)
+        {
+
+            var total = _context.Faturas
+                .Include(f => f.Contrato) 
+                .ThenInclude(c => c.OperadoraServico) 
+                .Where(f => f.Contrato.OperadoraId == operadoraId
+                            && f.DataEmissao.Year == ano
+                            && f.DataEmissao.Month == mes)
+                .Sum(f => f.ValorCobrado);
+
+            return total;
+        }
     }
 
 }

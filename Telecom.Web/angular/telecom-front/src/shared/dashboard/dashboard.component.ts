@@ -1,68 +1,101 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { BaseChartDirective } from 'ng2-charts';
+import { RouterModule } from '@angular/router';
+import { DashboardService } from '../../app/services/dashboard.service';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+  PieController,
+  BarController
+} from 'chart.js';
 
-// Importando os elementos e controladores necessários do Chart.js
-import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Tooltip, Legend, PieController, BarController } from 'chart.js';
-
-// Registrando os controladores necessários para os gráficos
-ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Tooltip, Legend, PieController, BarController);
+// Registrando os controladores dos gráficos
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+  PieController,
+  BarController,
+);
 
 @Component({
   standalone: true,
   selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
   imports: [
+    RouterModule,
     MatCardModule,
     CommonModule,
     BaseChartDirective,
   ],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
-  // Dados fictícios temporários - pode substituir pela API depois
-  faturaStatus = {
-    paga: 45,
-    pendente: 25,
-    atrasada: 15
-  };
+export class DashboardComponent implements OnInit {
 
-  faturasMensais = {
-    meses: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-    emitidas: [100, 120, 90, 130, 110, 150, 180, 170, 160, 190, 200, 220],
-    pagas: [90, 100, 80, 120, 100, 130, 160, 150, 140, 180, 190, 210]
-  };
+  // Indicadores
+  totalFaturas: number = 0;
+  valorTotal: number = 0;
 
-  // Cards
-  totalFaturas = 2000;
-  valorTotal = 450000;
+  // Dados dos gráficos
+  pieChartData: any;
+  barChartData: any;
 
-  // Gráfico de pizza (Status das faturas)
-  pieChartData = {
-    labels: ['Pagas', 'Pendentes', 'Atrasadas'],
-    datasets: [
-      {
-        data: [45, 25, 15],
-        backgroundColor: ['#4caf50', '#ffeb3b', '#f44336']
-      }
-    ]
-  };
+  constructor(private dashboardService: DashboardService) {}
 
-  // Gráfico de barras (Emitidas vs Pagas)
-  barChartData = {
-    labels: this.faturasMensais.meses,
-    datasets: [
-      {
-        label: 'Emitidas',
-        data: this.faturasMensais.emitidas,
-        backgroundColor: '#1976d2'
-      },
-      {
-        label: 'Pagas',
-        data: this.faturasMensais.pagas,
-        backgroundColor: '#4caf50'
-      }
-    ]
-  };
+  ngOnInit(): void {
+    this.loadIndicadores();
+    this.loadStatus();
+    this.loadMensal();
+  }
+
+  loadIndicadores(): void {
+    this.dashboardService.getIndicadores().subscribe(data => {
+      this.totalFaturas = data.totalFaturas;
+      this.valorTotal = data.valorTotal;
+    });
+  }
+
+  loadStatus(): void {
+    this.dashboardService.getStatus().subscribe(data => {
+      this.pieChartData = {
+        labels: ['Pagas', 'Pendentes', 'Atrasadas'],
+        datasets: [
+          {
+            data: [data.pagas, data.pendentes, data.atrasadas],
+            backgroundColor: ['#4caf50', '#ffeb3b', '#f44336']
+          }
+        ]
+      };
+    });
+  }
+
+  loadMensal(): void {
+    this.dashboardService.getMensal().subscribe(data => {
+      this.barChartData = {
+        labels: data.meses,
+        datasets: [
+          {
+            label: 'Emitidas',
+            data: data.emitidas,
+            backgroundColor: '#1976d2'
+          },
+          {
+            label: 'Pagas',
+            data: data.pagas,
+            backgroundColor: '#4caf50'
+          }
+        ]
+      };
+    });
+  }
 }

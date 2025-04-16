@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Telecom.DataBase;
 using Telecom.Entities;
 using Telecom.Entities.Request;
@@ -17,19 +18,20 @@ namespace Telecom.Biz
             _context = dbContext;
         }
 
-        public Contrato? BuscarContratoPorId(int id) =>  _context.Contratos.FirstOrDefault(o => o.Id == id);
+        public Contrato? BuscarContratoPorId(int id) => _context.Contratos.FirstOrDefault(o => o.Id == id);
 
         public Contrato CriarNovoContrato(ContratoResponse contratoResponse)
         {
-        
+
             Contrato novoContrato = new Contrato();
 
             novoContrato.NomeFilial = contratoResponse.NomeFilial;
             novoContrato.ValorMensal = contratoResponse.ValorMensal;
             novoContrato.PlanoContratado = contratoResponse.PlanoContratado;
             novoContrato.OperadoraId = contratoResponse.OperadoraId;
-            novoContrato.DataInicio = contratoResponse.DataInicio;
-            novoContrato.DataVencimento = contratoResponse.DataInicio.AddMonths(12);
+            novoContrato.DataInicio = DateTime.Now;
+            novoContrato.DataVencimento = DateTime.Now.AddMonths(12);
+            novoContrato.Status = true;
 
             _context.Contratos.Add(novoContrato);
             _context.SaveChanges();
@@ -40,6 +42,20 @@ namespace Telecom.Biz
 
         public void DeletarContrato(int id) =>
             _context.Contratos.Where(o => o.Id == id).ExecuteDelete();
+
+
+        public Contrato? AlternarStatusContrato(int id)
+        {
+            var contrato = _context.Contratos.FirstOrDefault(c => c.Id == id);
+
+            if (contrato == null)
+                return null;
+
+            contrato.Status = !contrato.Status;
+            _context.SaveChanges();
+
+            return contrato;
+        }
 
         public Contrato EditarContrato(ContratoRequest contratoRequest)
         {
@@ -56,13 +72,12 @@ namespace Telecom.Biz
             contratoExistente.ValorMensal = contratoRequest.ValorMensal;
             contratoExistente.PlanoContratado = contratoRequest.PlanoContratado;
             contratoExistente.OperadoraId = contratoRequest.OperadoraId;
-            contratoExistente.DataVencimento = contratoRequest.DataVencimento;
 
             // Salva as alterações no banco de dados
-            _context.Contratos.Update(contratoExistente); 
+            _context.Contratos.Update(contratoExistente);
             _context.SaveChanges();
 
-            return contratoExistente; 
+            return contratoExistente;
         }
 
 
@@ -72,5 +87,6 @@ namespace Telecom.Biz
 
             return ListaDeContratos;
         }
+
     }
 }

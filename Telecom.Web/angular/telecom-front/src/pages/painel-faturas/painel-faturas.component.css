@@ -1,0 +1,184 @@
+::ng-deep .form-container {
+  padding: 30px !important;
+  background-color: #ffffff !important;
+  margin-bottom: 30px !important;
+  border-radius: 12px !important;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+::ng-deep .full-width {
+  width: 100% !important;
+  margin-bottom: 20px !important;
+}
+
+::ng-deep .form-actions {
+  display: flex !important;
+  gap: 20px !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  background-color: #ffffff !important;
+  z-index: 9999 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 6px !important;
+  padding: 10px 0 !important;
+  max-height: 200px !important; /* Para evitar transbordar a tela */
+  overflow-y: auto !important;
+}
+
+/* Estilo das opções dentro do select */
+::ng-deep .mat-mdc-option {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  padding: 10px 16px !important;
+}
+
+::ng-deep .mat-mdc-option.mat-mdc-option-active {
+  background-color: #e7f3fe !important;
+  color: #007bff !important;
+  font-weight: bold !important;
+}
+
+::ng-deep .mat-mdc-option:hover {
+  background-color: #f1f1f1 !important;
+}
+
+::ng-deep .mat-mdc-option[aria-selected="false"]:not(.mat-mdc-option-active) {
+  background-color: #ffffff !important;
+}
+
+::ng-deep .mat-ripple.mat-mdc-option-ripple {
+  background-color: rgba(0, 123, 255, 0.1) !important;
+}
+
+/* Botão Criar Fatura */
+::ng-deep .botao-criar-fatura {
+  margin-top: 25px !important;
+  padding: 12px 20px !important;
+  background-color: #007bff !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+}
+
+::ng-deep .botao-criar-fatura:hover {
+  background-color: #0056b3 !important;
+}
+
+::ng-deep .botao-criar-fatura:focus {
+  outline: none !important;
+}
+
+/* Estilo dos inputs de texto */
+::ng-deep .mat-input-element {
+  padding: 12px 16px !important;
+  font-size: 16px !important;
+}
+
+::ng-deep .mat-form-field {
+  margin-bottom: 24px !important;
+}
+
+::ng-deep .mat-form-field-label {
+  font-size: 14px !important;
+  color: #555 !important;
+  font-weight: 500 !important;
+}
+
+/* Estilo do Select */
+::ng-deep .mat-form-field.mat-select {
+  position: relative !important;
+  z-index: 10 !important;
+  background-color: #ffffff !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  margin-bottom: 20px !important;
+}
+
+/* Garantir que o painel do Select não ultrapasse os itens da tabela */
+::ng-deep .mat-mdc-select-panel {
+  background-color: #ffffff !important;
+  z-index: 9999 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 6px !important;
+  padding: 10px 0 !important;
+  max-height: 200px !important; /* Para evitar transbordar a tela */
+  overflow-y: auto !important;
+}
+
+/* Ajustando o estilo da opção no select */
+::ng-deep .mat-mdc-option {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  padding: 10px 16px !important;
+}
+
+::ng-deep .mat-mdc-option.mat-mdc-option-active {
+  background-color: #e7f3fe !important;
+  color: #007bff !important;
+  font-weight: bold !important;
+}
+
+::ng-deep .mat-mdc-option:hover {
+  background-color: #f1f1f1 !important;
+}
+
+/* Remove a sobreposição do select com a tabela */
+::ng-deep .mat-form-field {
+  margin-bottom: 16px !important;
+}
+
+/* Configuração de foco e borda do select */
+::ng-deep .mat-select-arrow {
+  color: #007bff !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #555 !important;
+  font-weight: 500 !important;
+}
+
+/* Estilo para os inputs de texto do Angular Material */
+::ng-deep .mat-input-element {
+  padding: 12px 16px !important;
+  font-size: 16px !important;
+}
+
+::ng-deep .mat-form-field {
+  margin-bottom: 24px !important;
+}
+
+::ng-deep .mat-form-field-label {
+  font-size: 14px !important;
+  color: #555 !important;
+  font-weight: 500 !important;
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 600px) {
+  ::ng-deep .form-container {
+    padding: 20px !important;
+  }
+
+  ::ng-deep .mat-form-field, ::ng-deep .mat-select, ::ng-deep .mat-input-element {
+    font-size: 14px !important;
+  }
+
+  ::ng-deep .botao-criar-fatura {
+    width: 100% !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+  }
+
+  ::ng-deep .form-actions {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+}

@@ -12,7 +12,8 @@ export const routes: Routes = [
     { path: 'contratos', component: PainelContratosComponent },
     { path: 'faturas', component: PainelFaturasComponent },
     { path: 'operadoras', component: PainelOperadorasComponent },
+    { path: 'dashboards', component: DashboardComponent},
     { path: '**', redirectTo: '' },
-    { path: 'dashboard', component: DashboardComponent}
+
     
   ];

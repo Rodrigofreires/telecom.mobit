@@ -1,1 +1,75 @@
-<p>painel-operadoras works!</p>
+<div class="painel-operadoras container-fluid">
+
+  <button botao-global (click)="abrirFormCriar()" class="btn btn-primary mb-4">Nova Operadora</button>
+
+  <div class="table-responsive">
+    <table mat-table [dataSource]="dataSource" class="table table-striped table-bordered mat-elevation-z8">
+
+      <!-- Nome Operadora -->
+      <ng-container matColumnDef="nomeOperadora">
+        <th mat-header-cell *matHeaderCellDef> Nome </th>
+        <td mat-cell *matCellDef="let operadora"> {{ operadora.nomeOperadora }} </td>
+      </ng-container>
+
+      <!-- Tipo Serviço -->
+      <ng-container matColumnDef="tipoServico">
+        <th mat-header-cell *matHeaderCellDef> Tipo de Serviço </th>
+        <td mat-cell *matCellDef="let operadora"> {{ operadora.tipoServico }} </td>
+      </ng-container>
+
+      <!-- Contato Suporte -->
+      <ng-container matColumnDef="contatoSuporte">
+        <th mat-header-cell *matHeaderCellDef> Contato </th>
+        <td mat-cell *matCellDef="let operadora"> {{ operadora.contatoSuporte }} </td>
+      </ng-container>
+
+      <!-- Ações -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let operadora">
+          <button mat-button color="accent" (click)="editarOperadora(operadora)" class="btn btn-outline-secondary">Editar</button>
+          <button mat-button color="warn" (click)="deletarOperadora(operadora.id)" class="btn btn-outline-danger">Excluir</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+
+  <!-- Formulário  -->
+  <div *ngIf="isFormVisible" class="form-container">
+    <h3>{{ selectedOperadora ? 'Editar' : 'Nova' }} Operadora</h3>
+
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+      <div class="form-group">
+        <mat-form-field class="form-control">
+          <input matInput placeholder="Nome" name="nomeOperadora" [(ngModel)]="nomeOperadora" required>
+        </mat-form-field>
+      </div>
+    
+      <div class="form-group">
+        <mat-form-field class="form-control">
+          <mat-label>Tipo de Serviço</mat-label>
+          <mat-select name="tipoServico" [(ngModel)]="tipoServico" required>
+            <mat-option value="MÓVEL">MÓVEL</mat-option>
+            <mat-option value="FIXO">FIXO</mat-option>
+            <mat-option value="INTERNET">INTERNET</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    
+      <div class="form-group">
+        <mat-form-field class="form-control">
+          <input matInput placeholder="Contato Suporte" name="contatoSuporte" [(ngModel)]="contatoSuporte" required>
+        </mat-form-field>
+      </div>
+    
+      <button mat-raised-button color="primary" type="submit" class="btn btn-success btn-lg">Salvar</button>
+      <button mat-button type="button" (click)="fecharForm()" class="btn btn-danger btn-lg">Cancelar</button>
+    </form>
+    
+  </div>
+
+</div>

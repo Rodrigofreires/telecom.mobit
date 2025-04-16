@@ -63,6 +63,32 @@ namespace Telecom.Biz
             return operadora;
         }
 
+        public List<NomeOperadoraRequest> ListarNomesOperadoras()
+        {
+            
+            var ListaDeOperadoras = new List<NomeOperadoraRequest>();
+
+            var existeOperadoras = _context.OperadorasServicos.Any();
+
+            if (existeOperadoras)
+            {
+
+                var operadoras = _context.OperadorasServicos.ToList();
+
+                foreach (var operadora in operadoras)
+                {
+                    ListaDeOperadoras.Add(new NomeOperadoraRequest
+                    {
+                        Id = operadora.Id,
+                        NomeOperadora = operadora.NomeOperadora
+                    });
+                }
+            }
+
+            return ListaDeOperadoras;
+        }
+
+
         public List<OperadoraServico> ListarOperadoras()
         {
             var ListaDeOperadoras = _context.OperadorasServicos.ToList();

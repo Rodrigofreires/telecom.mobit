@@ -31,6 +31,22 @@ namespace Telecom.API.Controllers
             return Ok(ListaDeOperadoras);
         }
 
+
+        [HttpGet("listar-nome-operadoras")]
+        public IActionResult ListarNomesOperadoras()
+        {
+
+            List<NomeOperadoraRequest> ListaDeNomesDasOperadoras = _operadoraServicoService.ListarNomesOperadoras();
+
+            if (ListaDeNomesDasOperadoras == null)
+            {
+                return NotFound();
+            }
+            return Ok(ListaDeNomesDasOperadoras);
+        }
+
+
+
         [HttpGet("buscar/{id}")]
         public IActionResult BuscarOperadoraPorId(int id)
         {
@@ -84,7 +100,6 @@ namespace Telecom.API.Controllers
             }
         }
 
-        // Delete api/<ColaboradorController>
         [HttpDelete("deletar/{id}")]
         public IActionResult DeletarOperadora(int id)
         {

@@ -5,6 +5,7 @@ using Telecom.Entities.Request;
 using Telecom.Entities.Response;
 using Telecom.Entities;
 using Telecom.DataBase;
+using Microsoft.EntityFrameworkCore;
 
 namespace Telecom.API.Controllers
 {
@@ -99,5 +100,26 @@ namespace Telecom.API.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        [HttpPut("alternar-status/{id}")]
+        public IActionResult AlternarStatus(int id)
+        {
+            try
+            {
+                var contrato = _contratoService.AlternarStatusContrato(id);
+
+                if (contrato == null)
+                    return NotFound();
+
+                // Responde com o ID e Status do contrato atualizado
+                return Ok(new { contrato.Id, contrato.Status });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao alternar status do contrato: {ex.Message}");
+            }
+        }
+
+
     }
 }

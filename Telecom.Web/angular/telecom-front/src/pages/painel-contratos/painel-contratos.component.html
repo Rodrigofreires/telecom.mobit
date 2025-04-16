@@ -1,1 +1,141 @@
-<p>painel-contratos works!</p>
+<div class="painel-contratos container-fluid">
+
+  <!-- Botão para criar novo contrato -->
+  <button botao-global (click)="abrirFormCriar()" class="btn btn-primary mb-4">Novo Contrato</button>
+
+  <!-- Tabela de contratos -->
+  <div class="table-responsive">
+    <table mat-table [dataSource]="dataSource" class="table table-striped table-bordered mat-elevation-z8">
+
+      <!-- Nome Filial -->
+      <ng-container matColumnDef="nomeFilial">
+        <th mat-header-cell *matHeaderCellDef> Nome Filial </th>
+        <td mat-cell *matCellDef="let contrato"> {{ contrato.nomeFilial }} </td>
+      </ng-container>
+
+        <!-- Plano Contratado -->
+        <ng-container matColumnDef="nomeOperadora">
+          <th mat-header-cell *matHeaderCellDef> Operadora </th>
+          <td mat-cell *matCellDef="let contrato">{{ getNomeOperadora(contrato.operadoraId) }}
+          </td>
+        </ng-container>
+
+              <!-- Plano Contratado -->
+      <ng-container matColumnDef="nomeDaOperadora">
+        <th mat-header-cell *matHeaderCellDef> Plano Contratado </th>
+        <td mat-cell *matCellDef="let contrato"> {{ contrato.planoContratado }} </td>
+      </ng-container>
+
+      <!-- Plano Contratado -->
+      <ng-container matColumnDef="planoContratado">
+        <th mat-header-cell *matHeaderCellDef> Plano Contratado </th>
+        <td mat-cell *matCellDef="let contrato"> {{ contrato.planoContratado }} </td>
+      </ng-container>
+
+      <!-- Valor do Contrato -->
+      <ng-container matColumnDef="valorMensal">
+        <th mat-header-cell *matHeaderCellDef> Valor do Contrato </th>
+        <td mat-cell *matCellDef="let contrato"> {{ contrato.valorMensal | currency:'BRL' }} </td>
+      </ng-container>
+
+      <!-- Data Contrato -->
+      <ng-container matColumnDef="dataInicio">
+        <th mat-header-cell *matHeaderCellDef> Data Início </th>
+        <td mat-cell *matCellDef="let contrato"> {{ contrato.dataInicio | date: 'dd/MM/yyyy' }} </td>
+      </ng-container>
+
+      <!-- Data Vencimento -->
+      <ng-container matColumnDef="dataVencimento">
+        <th mat-header-cell *matHeaderCellDef> Data Vencimento </th>
+        <td mat-cell *matCellDef="let contrato"> {{ contrato.dataVencimento | date: 'dd/MM/yyyy' }} </td>
+      </ng-container>
+
+        <!-- Status do Contrato -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let contrato">
+            {{ contrato.status ? 'Ativo' : 'Desativado' }}
+          </td>
+        </ng-container>
+        
+
+
+      <!-- Ações -->
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let contrato">
+          <button mat-button color="accent" (click)="editarContrato(contrato)" class="btn btn-outline-secondary">
+            Editar
+          </button>
+      
+          <button mat-button color="warn" (click)="deletarContrato(contrato)" class="btn btn-outline-danger">
+            Excluir
+          </button>
+      
+          <button
+          mat-button
+          [color]="contrato.status ? 'warn' : 'accent' "
+          (click)="toggleStatus(contrato)"
+          class="btn btn-outline-danger"
+        >
+          {{ contrato.status ? 'Desativar' : 'Ativar' }}
+        </button>
+        </td>
+      </ng-container>
+      
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+
+  <!-- Formulário para criar ou editar contrato -->
+  <div *ngIf="isFormVisible" class="form-container">
+    <h3>{{ editando ? 'Editar Contrato' : 'Novo Contrato' }}</h3>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="formulario">
+      
+      <!-- Nome Filial -->
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput placeholder="Nome da Filial" formControlName="nomeFilial" required>
+        </mat-form-field>
+      </div>
+
+      <!-- Operadora -->
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Operadora</mat-label>
+          <mat-select formControlName="operadoraId" required>
+            <mat-option *ngFor="let operadora of operadoraRequest" [value]="operadora.id">
+              {{ operadora.nomeOperadora }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Plano Contratado -->
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput placeholder="Plano Contratado" formControlName="planoContratado" required>
+        </mat-form-field>
+      </div>
+
+      <!-- Valor Mensal -->
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput placeholder="Valor Mensal" type="number" formControlName="valorMensal" required>
+        </mat-form-field>
+      </div>
+
+      <!-- Botões Salvar e Cancelar -->
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit" class="btn btn-success btn-lg">Salvar</button>
+        <button mat-button type="button" (click)="fecharFormulario()" class="btn btn-danger btn-lg">Cancelar</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>

@@ -2,3 +2,55 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* Classe global de botões personalizáveis */
+.botao-global {
+    background-color: #1976d2 !important; /* Cor de fundo padrão */
+    color: white important; /* Cor do texto */
+    border: none important; /* Sem borda padrão */
+    padding: 12px 20px important; /* Padding do botão */
+    font-size: 16px important; /* Tamanho da fonte */
+    font-weight: 500 important; /* Peso da fonte */
+    border-radius: 4px important; /* Bordas arredondadas */
+    width: 100%; /* Largura do botão (100% por padrão) */
+    cursor: pointer important; /* Cursor como ponteiro */
+    transition: background-color 0.3s ease, transform 0.2s ease important; /* Transição suave */
+  }
+  
+  /* Efeito de hover */
+  .botao-global:hover {
+    background-color: #1565c0 important; /* Cor de fundo quando o botão for passado com o mouse */
+    transform: scale(1.05) important; /* Aumenta ligeiramente o tamanho do botão */
+  }
+  
+  /* Efeito de focus (quando o botão é selecionado) */
+  .botao-global:focus {
+    outline: none important; /* Remove o contorno padrão */
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.4) important; /* Sombra de foco azul */
+  }
+  
+  /* Efeito de clique */
+  .botao-global:active {
+    background-color: #0d47a1 important; /* Cor de fundo ao clicar */
+    transform: scale(1) important; /* Volta ao tamanho normal após clique */
+  }
+  
+  /* Classe opcional para botões de tamanho pequeno */
+  .botao-global.pequeno {
+    padding: 8px 16px important; /* Menor padding para botões pequenos */
+    font-size: 14px important; /* Menor tamanho de fonte */
+  }
+  
+  /* Classe opcional para botões com borda */
+  .botao-global.borda {
+    background-color: transparent; /* Fundo transparente */
+    border: 2px solid #1976d2 important; /* Borda azul */
+    color: #1976d2 important; /* Texto azul */
+  }
+  
+  .botao-global.borda:hover {
+    background-color: #1976d2 important; /* Fundo azul ao passar o mouse */
+    color: white important; /* Texto branco */
+  }
+  

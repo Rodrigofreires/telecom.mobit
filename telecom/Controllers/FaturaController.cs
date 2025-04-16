@@ -38,15 +38,24 @@ namespace Telecom.API.Controllers
 
 
         [HttpPost("criar")]
-        public async Task<IActionResult> PostFatura([FromBody] FaturaResponse faturaResponse)
+        public async Task<IActionResult> PostFaturas([FromBody] FaturaResponse faturaResponse)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var fatura = await _faturaService.CriarFaturaAsync(faturaResponse);
-            return CreatedAtAction(nameof(GetFatura), new { id = fatura.Id }, fatura);
-        }
+            try
+            {
+                // Cria as faturas mensais
+                var faturas = await _faturaService.CriarFaturasMensaisAsync(faturaResponse);
 
+                // Retorna todas as faturas criadas
+                return Ok(faturas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao criar faturas: {ex.Message}");
+            }
+        }
 
         [HttpPut("editar")]
         public async Task<IActionResult> PutFatura(FaturaResponse faturaResponse)
@@ -78,19 +87,12 @@ namespace Telecom.API.Controllers
         }
 
 
-        [HttpGet("total-gastos/{mesReferencia}")]
-        public IActionResult CalcularTotalGastosMes(DateTime mesReferencia)
+        [HttpGet("total-gastos-operadora")]
+        public IActionResult TotalGastosOperadora(int operadoraId, int ano, int mes)
         {
-            var totalGastos = _faturaService.CalcularTotalGastosMes(mesReferencia);
+            var total = _faturaService.CalcularTotalGastosOperadora(operadoraId, ano, mes);
 
-            return Ok(new { totalGastos });  
-        }
-
-        [HttpGet("gastos-mensais-por-contrato")]
-        public IActionResult CalcularGastosPorContrato([FromQuery] int contratoId, [FromQuery] DateTime mesReferencia)
-        {
-            var total = _faturaService.CalcularTotalGastosPorFilial(contratoId, mesReferencia);
-            return Ok(new { contratoId, mesReferencia = mesReferencia.ToString("yyyy-MM"), total });
+            return Ok(total);
         }
 
 

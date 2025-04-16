@@ -24,7 +24,8 @@ namespace Telecom.Entities.Response
         public int Id { get; set; }                
         public int ContratoId { get; set; }
         public decimal ValorCobrado { get; set; }  
-        public string Status { get; set; }
+        public string? Status { get; set; }
+
     }
 
 }

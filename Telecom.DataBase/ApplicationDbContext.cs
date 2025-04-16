@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion; // IMPORTANTE!
-using System;
 using Telecom.Entities;
 
 namespace Telecom.DataBase;

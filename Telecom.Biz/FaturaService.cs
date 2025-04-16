@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Telecom.DataBase;
-using Telecom.Entities.Request;
 using Telecom.Entities.Response;
 
 namespace Telecom.Biz

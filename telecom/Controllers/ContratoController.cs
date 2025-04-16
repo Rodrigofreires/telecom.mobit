@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Telecom.Biz;
 using Telecom.Entities.Request;
 using Telecom.Entities.Response;
-using Telecom.Entities;
 using Telecom.DataBase;
-using Microsoft.EntityFrameworkCore;
 
 namespace Telecom.API.Controllers
 {

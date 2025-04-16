@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telecom.DataBase;
+﻿using Telecom.DataBase;
 
 namespace Telecom.Biz
 {

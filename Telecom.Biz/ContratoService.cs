@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Telecom.DataBase;
-using Telecom.Entities;
 using Telecom.Entities.Request;
 using Telecom.Entities.Response;
 

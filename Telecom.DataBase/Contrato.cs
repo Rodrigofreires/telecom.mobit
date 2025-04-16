@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using Telecom.DataBase;
 using Telecom.Entities;
 
 namespace Telecom.DataBase

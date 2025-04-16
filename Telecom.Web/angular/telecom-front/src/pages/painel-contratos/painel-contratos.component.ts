@@ -71,7 +71,9 @@ export class PainelContratosComponent implements OnInit {
       nomeFilial: ['', Validators.required],
       operadoraId: [null, Validators.required],
       planoContratado: ['', Validators.required],
-      valorMensal: [0, [Validators.required, Validators.min(0)]]
+      valorMensal: [0, [Validators.required, Validators.min(0)]],
+      dataInicio: ['', Validators.required],
+      dataVencimento: ['', Validators.required]
     });
   }
 
@@ -108,7 +110,9 @@ export class PainelContratosComponent implements OnInit {
       nomeFilial: contrato.nomeFilial,
       operadoraId: contrato.operadoraId,
       planoContratado: contrato.planoContratado,
-      valorMensal: contrato.valorMensal
+      valorMensal: contrato.valorMensal,
+      dataInicio: contrato.dataInicio,
+      dataVencimento: contrato.dataVencimento
     });
   }
 

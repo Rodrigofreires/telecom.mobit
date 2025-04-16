@@ -122,6 +122,36 @@
         </mat-form-field>
       </div>
 
+        <!-- Valor Data Início do Contrato -->
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Data Início</mat-label>
+            <input matInput 
+                  [matDatepicker]="pickerInicio" 
+                  formControlName="dataInicio" 
+                  required 
+                  readonly 
+                  disableKeyboardInput>
+            <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+            <mat-datepicker #pickerInicio></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <!-- Data Vencimento -->
+        <div class="form-group">
+          <mat-form-field appearance="fill">
+            <mat-label>Data Vencimento</mat-label>
+            <input matInput 
+                  [matDatepicker]="pickerVencimento" 
+                  formControlName="dataVencimento" 
+                  required 
+                  readonly 
+                  disableKeyboardInput>
+            <mat-datepicker-toggle matSuffix [for]="pickerVencimento"></mat-datepicker-toggle>
+            <mat-datepicker #pickerVencimento></mat-datepicker>
+          </mat-form-field>
+        </div>
+
       <!-- Valor Mensal -->
       <div class="form-group">
         <mat-form-field>

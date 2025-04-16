@@ -198,3 +198,38 @@ mat-form-field {
     padding: 12px;
   }
 }
+
+  /* Força fundo branco e texto preto no painel do datepicker */
+  ::ng-deep .mat-datepicker-content,
+  ::ng-deep .mat-calendar {
+    background-color: #fff !important;
+    color: #000 !important;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 6px !important;
+    z-index: 9999 !important;
+  }
+  
+  /* Garante que os dias e cabeçalhos estejam pretos */
+  ::ng-deep .mat-calendar-body-cell-content,
+  ::ng-deep .mat-calendar-table-header,
+  ::ng-deep .mat-calendar-arrow {
+    color: #000 !important;
+  }
+  
+  /* Remove qualquer transparência/resquício no overlay */
+  ::ng-deep .cdk-overlay-pane {
+    background: transparent !important;
+  }
+  
+  /* Força o overlay do datepicker a não sobrepor campos de forma errada */
+  ::ng-deep .mat-datepicker-popup {
+    z-index: 1000 !important;
+    pointer-events: auto !important;
+  }
+  
+  /* Opcional: evita que dias selecionados fiquem com contraste ruim */
+  ::ng-deep .mat-calendar-body-selected {
+    background-color: #1976d2 !important; /* azul Material */
+    color: #fff !important;
+  }
+  

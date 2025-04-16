@@ -41,9 +41,9 @@ namespace Telecom.Biz
                     ContratoId = faturaResponse.ContratoId,
                     Contrato = contrato,
                     ValorCobrado = valorMensal,
-                    Status = "Pendente",
-                    DataEmissao = DateTime.UtcNow,
-                    DataVencimento = contrato.DataInicio.AddMonths(i + 1) // Data de vencimento de cada fatura
+                    Status = faturaResponse.Status,
+                    DataEmissao = faturaResponse.DataEmissao,
+                    DataVencimento = faturaResponse.DataEmissao.AddMonths(i + 1) // Data de vencimento de cada fatura
                 };
 
                 faturas.Add(fatura);
@@ -55,7 +55,6 @@ namespace Telecom.Biz
 
             return faturas;
         }
-
 
 
         // Atualizar fatura

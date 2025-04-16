@@ -93,8 +93,8 @@ export class PainelFaturasComponent implements OnInit {
       contratoId: ['', Validators.required],
       valorCobrado: ['', [Validators.required, Validators.min(1)]],
       status: ['', Validators.required],
-      dataEmissao: ['', Validators.required],  // Campo Data de Emissão
-      dataVencimento: ['', Validators.required],  // Campo Data de Vencimento
+      dataEmissao: ['', Validators.required],  
+      dataVencimento: ['', Validators.required],  
     });
     
 
@@ -133,7 +133,6 @@ export class PainelFaturasComponent implements OnInit {
 
         this.faturaService.editarFatura(fatura).subscribe({
           next: () => {
-            console.log('Fatura atualizada!');
             this.fecharFormulario();
             this.carregarFaturas();
           },
@@ -142,7 +141,7 @@ export class PainelFaturasComponent implements OnInit {
       } else {
         this.faturaService.criarFatura(fatura).subscribe({
           next: () => {
-            console.log('Fatura criada com sucesso!');
+
             this.fecharFormulario();
             this.carregarFaturas();
           },
